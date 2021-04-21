@@ -10,6 +10,7 @@ const useStyles = makeStyles({
   loginSection: {
     display: "flex",
     height: "100%",
+    justifyContent: "center",
     alignItems: "center",
     width: "100%",
   },

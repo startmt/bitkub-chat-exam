@@ -1,15 +1,23 @@
-import { createFirebaseConnection } from "../../firebase";
+import { IResponseApi } from "../../../../domains/IResponse";
+import { getFirebaseTool } from "../../firebase";
 import { ISigninPayload } from "./interface";
 
-const { firebaseAuth } = createFirebaseConnection();
-export const signinWithEmailAndPassword = (user: ISigninPayload) => {
+const { firebaseAuth } = getFirebaseTool();
+
+export const signinWithEmailAndPassword: (
+  user: ISigninPayload
+) => Promise<IResponseApi<any>> = async (user) => {
   const { email, password } = user;
-  firebaseAuth
-    .signInWithEmailAndPassword(email, password)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  try {
+    await firebaseAuth.signInWithEmailAndPassword(email, password);
+    return {
+      data: {},
+      isSuccess: true,
+    };
+  } catch (e) {
+    return {
+      error: e,
+      isSuccess: false,
+    };
+  }
 };

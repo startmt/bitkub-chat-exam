@@ -22,14 +22,21 @@ export const defaultConfig: IFirebaseConfig = {
   measurementId: "G-P1H2BRP5M3",
 };
 
+export let firebaseInstance: firebase.app.App;
+
 export const createFirebaseConnection = (
   config: IFirebaseConfig = defaultConfig
 ) => {
-  if (firebase.apps.length === 0) {
-    const firebaseConfig = config;
-    firebase.initializeApp(firebaseConfig);
+  if (firebase.apps.length > 0) {
+    firebaseInstance = firebase.apps[0];
+  } else if (!firebaseInstance) {
+    firebaseInstance = firebase.initializeApp(config);
   }
+};
+
+export const getFirebaseTool = (config: IFirebaseConfig = defaultConfig) => {
+  createFirebaseConnection(config);
   return {
-    firebaseAuth: firebase.auth(),
+    firebaseAuth: firebaseInstance.auth(),
   };
 };
