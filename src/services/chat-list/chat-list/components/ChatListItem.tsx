@@ -36,6 +36,16 @@ const useStyles = makeStyles({
   text: {
     marginRight: 8,
   },
+  secondary: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  primary: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+  },
 });
 
 interface IChatListItemProps {
@@ -49,21 +59,26 @@ const ChatListItem: React.FC<IChatListItemProps> = (props) => {
   const classes = useStyles({});
 
   const Secondary = (
-    <div>
+    <div className={classes.secondary}>
       <Typography className={classes.text}>
         {lastMessage && lastMessage.message}
+      </Typography>
+      <Typography color="textSecondary" className={classes.time}>
+        {lastMessage && dayjs(lastMessage.time.toDate()).format("hh:mm a")}
       </Typography>
     </div>
   );
   return (
     <PaperCard className={classes.paper}>
       <ListItem onClick={() => onClick(id)} className={classes.listItem} button>
-        <Typography color="textSecondary" className={classes.time}>
-          {lastMessage && dayjs(lastMessage.time.toDate()).format("hh:mm a")}
-        </Typography>
         <ListItemText
           className={classes.chatNameItem}
-          primary={<Typography variant="h6">{name}</Typography>}
+          primary={
+            <div className={classes.primary}>
+              <Typography variant="h6">{name}</Typography>
+              <Typography color="textSecondary">{id}</Typography>
+            </div>
+          }
           secondary={Secondary}
         />
       </ListItem>

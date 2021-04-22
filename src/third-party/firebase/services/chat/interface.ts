@@ -12,3 +12,7 @@ export interface IChatListResponse {
 export interface ICreateChatRoomResponse {
   id: string;
 }
+
+export interface IJoinChatRoomResponse {
+  id: string;
+}

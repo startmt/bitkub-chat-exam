@@ -1,6 +1,7 @@
 import { Button, makeStyles, Typography } from "@material-ui/core";
 import CreateChatRoomModalContainer from "./CreateChatRoomModalContainer";
 import { useHeaderContainer } from "./hook";
+import JoinChatRoomModalContainer from "./JoinChatRoomModalContainer";
 
 const useStyles = makeStyles({
   root: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
 });
 const ChatListContainer = () => {
   const classes = useStyles({});
-  const { user } = useHeaderContainer();
+  const { user, signout } = useHeaderContainer();
   return (
     <div className={classes.root}>
       <div>
@@ -37,14 +38,12 @@ const ChatListContainer = () => {
       </div>
       <div className={classes.buttonSection}>
         <div className={classes.marginButton}>
-          <Button variant="contained" color="secondary">
-            Join Room
-          </Button>
+          <JoinChatRoomModalContainer />
         </div>
         <div className={classes.marginButton}>
           <CreateChatRoomModalContainer />
         </div>
-        <Button color="default">
+        <Button onClick={signout} color="default">
           <Typography className={classes.signoutText}>Sign out</Typography>
         </Button>
       </div>
