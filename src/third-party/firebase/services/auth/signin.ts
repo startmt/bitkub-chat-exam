@@ -21,3 +21,13 @@ export const signinWithEmailAndPassword: (
     };
   }
 };
+
+export const updateDisplayname = async (displayName: string) => {
+  const user = firebaseAuth.currentUser;
+
+  if (user) {
+    await user.updateProfile({
+      displayName: displayName,
+    });
+  }
+};

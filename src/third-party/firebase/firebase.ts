@@ -38,5 +38,6 @@ export const getFirebaseTool = (config: IFirebaseConfig = defaultConfig) => {
   createFirebaseConnection(config);
   return {
     firebaseAuth: firebaseInstance.auth(),
+    firebaseFirestore: firebaseInstance.firestore(),
   };
 };

@@ -43,11 +43,33 @@ const RegisterContainer = () => {
       <div className={classes.inputWrapper}>
         <Input
           control={loginForm.control}
+          name="name"
+          rules={{
+            required: {
+              message: "Please enter your display name",
+              value: true,
+            },
+          }}
+          textFieldProps={{
+            variant: "outlined",
+            label: "name",
+            error: !!loginForm.formState.errors.name,
+            helperText: loginForm.formState.errors.name?.message,
+          }}
+        />
+      </div>
+      <div className={classes.inputWrapper}>
+        <Input
+          control={loginForm.control}
           name="password"
           rules={{
             required: {
               message: "Please enter your password.",
               value: true,
+            },
+            minLength: {
+              message: "Please enter your password 1-6 character",
+              value: 6,
             },
             validate: (value) =>
               value === loginForm.watch("repassword") ||

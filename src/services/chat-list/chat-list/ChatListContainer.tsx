@@ -1,11 +1,5 @@
-import {
-  List,
-  ListItem,
-  ListItemText,
-  makeStyles,
-} from "@material-ui/core";
+import { List, ListItem, ListItemText, makeStyles } from "@material-ui/core";
 import { PaperCard } from "../../../components";
-import { useLoginContainer } from "./hook";
 
 const useStyles = makeStyles({
   paper: {
@@ -24,7 +18,6 @@ const useStyles = makeStyles({
 });
 const ChatListContainer = () => {
   const classes = useStyles({});
-  const { loginForm, handleLogin } = useLoginContainer();
   return (
     <List>
       <PaperCard className={classes.paper}>

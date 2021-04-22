@@ -1,15 +1,25 @@
-import { IResponseApi } from "../../../../domains/IResponse";
+import { dto } from ".";
+import { IResponseApi, IResponseFailApi } from "../../../../domains/IResponse";
 import { getFirebaseTool } from "../../firebase";
-import { IRegisterPayload } from "./interface";
+import { ICreateUserFireStorePayload, IRegisterPayload } from "./interface";
+import { signinWithEmailAndPassword, updateDisplayname } from "./signin";
 
-const { firebaseAuth } = getFirebaseTool();
+const { firebaseAuth, firebaseFirestore } = getFirebaseTool();
 
 export const registerWithEmailAndPassword: (
-  user: IRegisterPayload
-) => Promise<IResponseApi<any>> = async (user) => {
+  user: IRegisterPayload,
+  userFirestore: ICreateUserFireStorePayload
+) => Promise<IResponseApi<any>> = async (user, userFirestore) => {
   const { email, password } = user;
   try {
-    await firebaseAuth.createUserWithEmailAndPassword(email, password);
+    const data = await firebaseAuth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
+    data.user?.updateProfile({
+      displayName: userFirestore.name,
+    });
+    await createUserOnFirestore(userFirestore);
     return {
       data: {},
       isSuccess: true,
@@ -18,6 +28,12 @@ export const registerWithEmailAndPassword: (
     return {
       error: e,
       isSuccess: false,
-    };
+    } as IResponseFailApi<any>;
   }
+};
+
+export const createUserOnFirestore = async (
+  users: ICreateUserFireStorePayload
+) => {
+  firebaseFirestore.collection("users").add(users);
 };

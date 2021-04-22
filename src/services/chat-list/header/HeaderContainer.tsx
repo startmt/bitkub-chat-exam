@@ -1,4 +1,5 @@
 import { Button, makeStyles, Typography } from "@material-ui/core";
+import { useHeaderContainer } from "./hook";
 
 const useStyles = makeStyles({
   root: {
@@ -22,10 +23,11 @@ const useStyles = makeStyles({
 });
 const ChatListContainer = () => {
   const classes = useStyles({});
+  const { user } = useHeaderContainer();
   return (
     <div className={classes.root}>
       <div>
-        <Typography variant="h4">Chat Room</Typography>
+        <Typography variant="h4">Chat Room ({user?.displayName})</Typography>
       </div>
       <div>
         <Button

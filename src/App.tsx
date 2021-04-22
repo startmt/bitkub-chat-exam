@@ -6,6 +6,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { theme } from "./utils/theme";
 import { PrivateRoute } from "./services/routes";
 import { createFirebaseConnection } from "./third-party/firebase";
+import { SnackbarProvider } from "notistack";
 
 const LoginPage = lazy(
   () => import(/* webpackChunkName: "LoginPage" */ "./pages/login")
@@ -24,15 +25,17 @@ function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <Suspense fallback={<Skeleton />}>
-          <Switch>
-            <PrivateRoute path="/main" component={ChatListPage} />
-          </Switch>
-          <Switch>
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/register" component={RegisterPage} />
-          </Switch>
-        </Suspense>
+        <SnackbarProvider maxSnack={3}>
+          <Suspense fallback={<Skeleton />}>
+            <Switch>
+              <PrivateRoute path="/main" component={ChatListPage} />
+            </Switch>
+            <Switch>
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/register" component={RegisterPage} />
+            </Switch>
+          </Suspense>
+        </SnackbarProvider>
       </ThemeProvider>
     </Router>
   );

@@ -4,6 +4,8 @@ import { useLoadingCallback } from "react-loading-hook";
 import { firebaseServices } from "../../../third-party/firebase";
 import { LoadingCallback } from "react-loading-hook/lib/useLoadingCallback";
 import { useHistory } from "react-router";
+import { useSnackbar } from "notistack";
+import { IResponseFailApi } from "../../../domains/IResponse";
 export const useLoginContainer = () => {
   const { isLoginError, isLoginLoading, loginService } = useLoginService();
   const { loginForm, handleLogin } = useLoginForm({ loginService });
@@ -12,6 +14,7 @@ export const useLoginContainer = () => {
 };
 
 const useLoginService = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const handleService = async (user: ISigninPayload) => {
     const res = await firebaseServices.authService.signinWithEmailAndPassword(
@@ -19,7 +22,15 @@ const useLoginService = () => {
     );
     if (res.isSuccess) {
       history.replace("/main");
+      enqueueSnackbar("Login success", {
+        variant: "success",
+      });
+      return;
     }
+    const error = res as IResponseFailApi<any>;
+    enqueueSnackbar(error.error.message as IResponseFailApi<any>, {
+      variant: "error",
+    });
   };
 
   const [loginService, isLoginLoading, isLoginError] = useLoadingCallback(
