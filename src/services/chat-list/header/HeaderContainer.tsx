@@ -1,4 +1,5 @@
 import { Button, makeStyles, Typography } from "@material-ui/core";
+import CreateChatRoomModalContainer from "./CreateChatRoomModalContainer";
 import { useHeaderContainer } from "./hook";
 
 const useStyles = makeStyles({
@@ -10,8 +11,10 @@ const useStyles = makeStyles({
     marginTop: 24,
     marginBottom: 24,
   },
-  inputWrapper: {
-    marginTop: 16,
+  buttonSection: {
+    width: "40%",
+    display: "flex",
+    justifyContent: "flex-end",
   },
   buttonWrapper: {
     marginTop: 16,
@@ -19,6 +22,9 @@ const useStyles = makeStyles({
   },
   marginButton: {
     marginRight: 16,
+  },
+  signoutText: {
+    color: "red",
   },
 });
 const ChatListContainer = () => {
@@ -29,16 +35,17 @@ const ChatListContainer = () => {
       <div>
         <Typography variant="h4">Chat Room ({user?.displayName})</Typography>
       </div>
-      <div>
-        <Button
-          className={classes.marginButton}
-          variant="contained"
-          color="primary"
-        >
-          Create Chat Room
-        </Button>
-        <Button variant="contained" color="secondary">
-          Join Room
+      <div className={classes.buttonSection}>
+        <div className={classes.marginButton}>
+          <Button variant="contained" color="secondary">
+            Join Room
+          </Button>
+        </div>
+        <div className={classes.marginButton}>
+          <CreateChatRoomModalContainer />
+        </div>
+        <Button color="default">
+          <Typography className={classes.signoutText}>Sign out</Typography>
         </Button>
       </div>
     </div>

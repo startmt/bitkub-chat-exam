@@ -1,40 +1,21 @@
-import { List, ListItem, ListItemText, makeStyles } from "@material-ui/core";
-import { PaperCard } from "../../../components";
+import { List } from "@material-ui/core";
+import { ChatListItem } from "./components";
+import { useChatListContainer } from "./hook";
 
-const useStyles = makeStyles({
-  paper: {
-    marginBottom: 24,
-  },
-  listItem: {
-    padding: 32,
-  },
-  inputWrapper: {
-    marginTop: 16,
-  },
-  buttonWrapper: {
-    marginTop: 16,
-    textAlign: "right",
-  },
-});
 const ChatListContainer = () => {
-  const classes = useStyles({});
+  const { chatList, onClickChatRoom } = useChatListContainer();
   return (
     <List>
-      <PaperCard className={classes.paper}>
-        <ListItem className={classes.listItem} button>
-          <ListItemText primary="Vacation" secondary="July 20, 2014" />
-        </ListItem>
-      </PaperCard>
-      <PaperCard className={classes.paper}>
-        <ListItem className={classes.listItem} button>
-          <ListItemText primary="Vacation" secondary="July 20, 2014" />
-        </ListItem>
-      </PaperCard>
-      <PaperCard className={classes.paper}>
-        <ListItem className={classes.listItem} button>
-          <ListItemText primary="Vacation" secondary="July 20, 2014" />
-        </ListItem>
-      </PaperCard>
+      {chatList.map((c) => {
+        return (
+          <ChatListItem
+            onClick={onClickChatRoom}
+            id={c.id}
+            lastMessage={c.lastMessage}
+            name={c.roomName}
+          />
+        );
+      })}
     </List>
   );
 };

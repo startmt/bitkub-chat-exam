@@ -9,17 +9,16 @@ interface IFirebaseConfig {
   storageBucket: string;
   messagingSenderId: string;
   appId: string;
-  measurementId: string;
+  measurementId?: string;
 }
 
 export const defaultConfig: IFirebaseConfig = {
-  apiKey: "AIzaSyAlkWKKGtEuP0lqpd_bOilPQGacCrjdlVw",
-  authDomain: "chat-example-9cfb5.firebaseapp.com",
-  projectId: "chat-example-9cfb5",
-  storageBucket: "chat-example-9cfb5.appspot.com",
-  messagingSenderId: "539927010807",
-  appId: "1:539927010807:web:815db4dabfb55726f562f2",
-  measurementId: "G-P1H2BRP5M3",
+  apiKey: "AIzaSyBcljDuS2omRoD_5aPjpXJ9RueudQj6WYs",
+  authDomain: "bitkub-chat-app-e.firebaseapp.com",
+  projectId: "bitkub-chat-app-e",
+  storageBucket: "bitkub-chat-app-e.appspot.com",
+  messagingSenderId: "293090064704",
+  appId: "1:293090064704:web:3f9616b8d6242c3285e2a5",
 };
 
 export let firebaseInstance: firebase.app.App;
