@@ -1,7 +1,7 @@
 import { Button, makeStyles, Typography } from "@material-ui/core";
 import { PaperCard } from "../../../components";
 import { Input } from "../../../components/form";
-import { useLoginContainer } from "./hook";
+import { useRegisterContainer } from "./hook";
 const useStyles = makeStyles({
   paper: {
     padding: 32,
@@ -16,19 +16,19 @@ const useStyles = makeStyles({
     textAlign: "right",
   },
 });
-const LoginContainer = () => {
+const RegisterContainer = () => {
   const classes = useStyles({});
-  const { loginForm, handleLogin } = useLoginContainer();
+  const { loginForm, handleRegister } = useRegisterContainer();
   return (
     <PaperCard className={classes.paper}>
-      <Typography variant="h5">Login </Typography>
+      <Typography variant="h5">Register </Typography>
       <div className={classes.inputWrapper}>
         <Input
           control={loginForm.control}
           name="email"
           rules={{
             required: {
-              message: "กรุณากรอก Email",
+              message: "Please enter your e-mail",
               value: true,
             },
           }}
@@ -46,9 +46,12 @@ const LoginContainer = () => {
           name="password"
           rules={{
             required: {
-              message: "กรุณากรอก Password",
+              message: "Please enter your password.",
               value: true,
             },
+            validate: (value) =>
+              value === loginForm.watch("repassword") ||
+              "Please sign password same re-password",
           }}
           textFieldProps={{
             variant: "outlined",
@@ -59,13 +62,33 @@ const LoginContainer = () => {
           }}
         />
       </div>
+      <div className={classes.inputWrapper}>
+        <Input
+          control={loginForm.control}
+          name="repassword"
+          rules={{
+            required: {
+              message: "Please enter your password again.",
+              value: true,
+            },
+            validate: (value) => value === loginForm.watch("password"),
+          }}
+          textFieldProps={{
+            variant: "outlined",
+            label: "Re-Password",
+            error: !!loginForm.formState.errors.repassword,
+            helperText: loginForm.formState.errors.repassword?.message,
+            type: "password",
+          }}
+        />
+      </div>
       <div className={classes.buttonWrapper}>
-        <Button onClick={handleLogin} variant="contained" color="primary">
-          Login
+        <Button onClick={handleRegister} variant="contained" color="primary">
+          Register
         </Button>
       </div>
     </PaperCard>
   );
 };
 
-export default LoginContainer;
+export default RegisterContainer;

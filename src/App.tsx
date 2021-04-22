@@ -11,6 +11,14 @@ const LoginPage = lazy(
   () => import(/* webpackChunkName: "LoginPage" */ "./pages/login")
 );
 
+const RegisterPage = lazy(
+  () => import(/* webpackChunkName: "LoginPage" */ "./pages/register")
+);
+
+const ChatListPage = lazy(
+  () => import(/* webpackChunkName: "LoginPage" */ "./pages/chat-list")
+);
+
 createFirebaseConnection();
 function App() {
   return (
@@ -18,12 +26,11 @@ function App() {
       <ThemeProvider theme={theme}>
         <Suspense fallback={<Skeleton />}>
           <Switch>
-            <PrivateRoute path="/main" component={LoginPage} />
+            <PrivateRoute path="/main" component={ChatListPage} />
           </Switch>
           <Switch>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
           </Switch>
         </Suspense>
       </ThemeProvider>
