@@ -24,6 +24,9 @@ const useStyles = makeStyles({
     alignItems: "flex-end",
     justifyContent: "flex-end",
   },
+  message: {
+    wordBreak: "break-all",
+  },
   timeWrapper: {
     marginBottom: 4,
     marginRight: 8,
@@ -53,7 +56,12 @@ const UserMessageItem: React.FC<IFriendMessageItemProps> = (props) => {
             {sentTime}
           </Typography>
           <PaperCard className={classes.paper}>
-            <Typography component="span" variant="body1" color="textPrimary">
+            <Typography
+              className={classes.message}
+              component="span"
+              variant="body1"
+              color="textPrimary"
+            >
               {message}
             </Typography>
           </PaperCard>

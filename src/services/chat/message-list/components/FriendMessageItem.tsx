@@ -20,6 +20,9 @@ const useStyles = makeStyles({
     alignItems: "flex-end",
     justifyContent: "flex-start",
   },
+  message:{
+    wordBreak: 'break-all'
+  },
   timeWrapper: {
     marginBottom: 4,
     marginLeft: 8,
@@ -42,7 +45,7 @@ const FriendMessageItem: React.FC<IFriendMessageItemProps> = (props) => {
       secondary={
         <div className={classes.secondaryWrapper}>
           <PaperCard className={classes.paper}>
-            <Typography component="span" variant="body1" color="textPrimary">
+            <Typography className={classes.message} component="span" variant="body1" color="textPrimary">
               {message}
             </Typography>
           </PaperCard>
