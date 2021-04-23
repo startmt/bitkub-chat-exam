@@ -1,4 +1,4 @@
-import { IconButton, makeStyles } from "@material-ui/core";
+import { Divider, IconButton, makeStyles } from "@material-ui/core";
 import { PaperCard } from "../../../components";
 import { TextField } from "../../../components/form";
 import SendIcon from "@material-ui/icons/Send";
@@ -23,6 +23,7 @@ const SendMesssageFormContainer = () => {
   const classes = useStyles();
   return (
     <form onSubmit={onSendMessage}>
+      <Divider style={{ width: "100%" }} />
       <PaperCard className={classes.paper}>
         <TextField control={sendMessageForm.control} name="message" />
         <IconButton

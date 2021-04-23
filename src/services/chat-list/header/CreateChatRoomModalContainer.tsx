@@ -35,7 +35,7 @@ const CreateChatRoomModalContainer = () => {
   return (
     <>
       <Button onClick={handleOpenModal} variant="contained" color="primary">
-        Create Chat Room
+        Create
       </Button>
       <Dialog
         classes={{

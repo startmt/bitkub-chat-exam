@@ -1,4 +1,10 @@
-import { Button, makeStyles, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  makeStyles,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 import CreateChatRoomModalContainer from "./CreateChatRoomModalContainer";
 import { useHeaderContainer } from "./hook";
 import JoinChatRoomModalContainer from "./JoinChatRoomModalContainer";
@@ -13,7 +19,7 @@ const useStyles = makeStyles({
     marginBottom: 24,
   },
   buttonSection: {
-    width: "40%",
+    width: "100%",
     display: "flex",
     justifyContent: "flex-end",
   },
@@ -32,20 +38,26 @@ const ChatListContainer = () => {
   const classes = useStyles({});
   const { user, signout } = useHeaderContainer();
   return (
-    <div className={classes.root}>
-      <div>
-        <Typography variant="h4">Chat Room ({user?.displayName})</Typography>
-      </div>
-      <div className={classes.buttonSection}>
-        <div className={classes.marginButton}>
-          <JoinChatRoomModalContainer />
+    <div>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography variant="h6" color="inherit">
+            Chat Room ({user?.displayName})
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.root}>
+        <div className={classes.buttonSection}>
+          <div className={classes.marginButton}>
+            <JoinChatRoomModalContainer />
+          </div>
+          <div className={classes.marginButton}>
+            <CreateChatRoomModalContainer />
+          </div>
+          <Button onClick={signout} color="default">
+            <Typography className={classes.signoutText}>Sign out</Typography>
+          </Button>
         </div>
-        <div className={classes.marginButton}>
-          <CreateChatRoomModalContainer />
-        </div>
-        <Button onClick={signout} color="default">
-          <Typography className={classes.signoutText}>Sign out</Typography>
-        </Button>
       </div>
     </div>
   );

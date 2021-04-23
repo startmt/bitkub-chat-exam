@@ -39,9 +39,7 @@ const ChatRoomPage = () => {
       <PaperCard className={classes.paper}>
         <AppbarContainer />
         <div className={classes.messageListSection}>
-          <PaperCard>
-            <MessageListContainer />
-          </PaperCard>
+          <MessageListContainer />
         </div>
         <div className={classes.formSection}>
           <SendMesssageFormContainer />

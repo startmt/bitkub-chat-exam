@@ -38,7 +38,7 @@ const JoinChatRoomModalContainer = () => {
   return (
     <>
       <Button onClick={handleOpenModal} variant="contained" color="secondary">
-        Join Room
+        Join
       </Button>
       <Dialog
         classes={{
