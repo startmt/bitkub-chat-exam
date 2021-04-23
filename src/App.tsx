@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Skeleton } from "@material-ui/lab";
 import { ThemeProvider } from "@material-ui/styles";
@@ -33,8 +38,6 @@ function App() {
             <Switch>
               <PrivateRoute path="/main" component={ChatListPage} />
               <PrivateRoute path="/chat-room/:id" component={ChatRoomPage} />
-            </Switch>
-            <Switch>
               <UnAuthRoute exact path="/login" component={LoginPage} />
               <UnAuthRoute exact path="/register" component={RegisterPage} />
               <PrivateRoute component={ChatListPage} />

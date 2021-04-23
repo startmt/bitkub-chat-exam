@@ -1,6 +1,6 @@
 import { Skeleton } from "@material-ui/lab";
 import React from "react";
-import { Redirect, Route, RouteProps } from "react-router-dom";
+import { Redirect, Route, RouteProps, useHistory } from "react-router-dom";
 import { usePrivateRoute } from "./hook";
 
 interface IPrivateRoute extends RouteProps {}

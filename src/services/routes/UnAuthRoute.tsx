@@ -7,6 +7,7 @@ interface IUnAuthRouteProps extends RouteProps {}
 
 export const UnAuthRoute: React.FC<IUnAuthRouteProps> = (props) => {
   const { authState } = usePrivateRoute();
+  console.log('do')
   switch (authState) {
     case "AUTHORIZED":
       return <Redirect to="/main" />;
