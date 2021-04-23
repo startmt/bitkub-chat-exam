@@ -10,7 +10,19 @@ export const useLoginContainer = () => {
   const { isLoginError, isLoginLoading, loginService } = useLoginService();
   const { loginForm, handleLogin } = useLoginForm({ loginService });
 
-  return { loginForm, isLoginLoading, isLoginError, handleLogin };
+  const h = useHistory();
+
+  const routeToRegisterPage = () => {
+    h.push("/register");
+  };
+
+  return {
+    loginForm,
+    isLoginLoading,
+    isLoginError,
+    handleLogin,
+    routeToRegisterPage,
+  };
 };
 
 const useLoginService = () => {

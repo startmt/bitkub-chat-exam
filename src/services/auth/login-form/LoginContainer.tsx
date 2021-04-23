@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 });
 const LoginContainer = () => {
   const classes = useStyles({});
-  const { loginForm, handleLogin } = useLoginContainer();
+  const { loginForm, handleLogin, routeToRegisterPage } = useLoginContainer();
   return (
     <PaperCard className={classes.paper}>
       <Typography variant="h5">Login </Typography>
@@ -69,6 +69,7 @@ const LoginContainer = () => {
           >
             Login
           </Button>
+          <Button onClick={routeToRegisterPage}>Or Create Account</Button>
         </div>
       </form>
     </PaperCard>

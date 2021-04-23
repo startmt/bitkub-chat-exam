@@ -18,6 +18,7 @@ export const registerWithEmailAndPassword: (
       displayName: userFirestore.name,
     });
     await createUserOnFirestore(userFirestore);
+    await firebaseAuth.signOut();
     return {
       data: {},
       isSuccess: true,

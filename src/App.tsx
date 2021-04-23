@@ -4,7 +4,7 @@ import { lazy, Suspense } from "react";
 import { Skeleton } from "@material-ui/lab";
 import { ThemeProvider } from "@material-ui/styles";
 import { theme } from "./utils/theme";
-import { PrivateRoute } from "./services/routes";
+import { PrivateRoute, UnAuthRoute } from "./services/routes";
 import { createFirebaseConnection } from "./third-party/firebase";
 import { SnackbarProvider } from "notistack";
 
@@ -36,8 +36,9 @@ function App() {
               <PrivateRoute path="/chat-room/:id" component={ChatRoomPage} />
             </Switch>
             <Switch>
-              <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/register" component={RegisterPage} />
+              <UnAuthRoute exact path="/login" component={LoginPage} />
+              <UnAuthRoute exact path="/register" component={RegisterPage} />
+              <PrivateRoute path="/main" component={ChatListPage} />
             </Switch>
           </Suspense>
         </SnackbarProvider>
