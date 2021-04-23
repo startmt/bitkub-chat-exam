@@ -3,7 +3,7 @@ import { useLoadingCallback } from "react-loading-hook";
 import { useHistory } from "react-router";
 import { IResponseSuccessApi } from "../../../domains/IResponse";
 import { firebaseServices } from "../../../third-party/firebase";
-import { IChatListResponse } from "../../../third-party/firebase/services/chat/interface";
+import { IChatRoomResponse } from "../../../third-party/firebase/services/chat/interface";
 import { useAuthorize } from "../../auth/hooks/use-authorize";
 
 export const useChatListContainer = () => {
@@ -17,12 +17,12 @@ export const useChatListContainer = () => {
 };
 
 const useQueryChatListService = () => {
-  const [chatList, setChatList] = useState<IChatListResponse[]>([]);
+  const [chatList, setChatList] = useState<IChatRoomResponse[]>([]);
 
   const handleService = async () => {
     const dataList = await firebaseServices.chatService.getUserChatList();
     if (dataList.isSuccess) {
-      const response = dataList as IResponseSuccessApi<IChatListResponse[]>;
+      const response = dataList as IResponseSuccessApi<IChatRoomResponse[]>;
       setChatList(response.data);
     }
   };

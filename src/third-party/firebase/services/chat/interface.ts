@@ -1,5 +1,5 @@
 import firebase from "firebase";
-export interface IChatListResponse {
+export interface IChatRoomResponse {
   id: string;
   roomName: string;
   lastMessage?: {

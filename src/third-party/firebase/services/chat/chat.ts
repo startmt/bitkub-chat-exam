@@ -1,6 +1,10 @@
 import { IResponseApi } from "../../../../domains/IResponse";
 import { getFirebaseTool } from "../../firebase";
-import { ICreateChatRoomResponse, IJoinChatRoomResponse } from "./interface";
+import {
+  IChatRoomResponse,
+  ICreateChatRoomResponse,
+  IJoinChatRoomResponse,
+} from "./interface";
 
 const { firebaseAuth, firebaseFirestore } = getFirebaseTool();
 
@@ -81,5 +85,51 @@ export const joinChatRoom: (
   } catch (e) {
     console.log(e);
     return { error: e, isSuccess: false };
+  }
+};
+
+export const getChatMessageList: (
+  id: string
+) => Promise<IResponseApi<any>> = async (id) => {
+  try {
+    const messageDocument = await firebaseFirestore
+      .collection("chat-room")
+      .doc(id)
+      .collection("chat-message")
+      .limit(100)
+      .get();
+    const dataList = messageDocument.docs.map((d) => d.data());
+    return {
+      data: dataList,
+      isSuccess: true,
+    };
+  } catch (e) {
+    return {
+      error: e,
+      isSuccess: false,
+    };
+  }
+};
+
+export const getChatDetail: (
+  id: string
+) => Promise<IResponseApi<IChatRoomResponse | any>> = async (id) => {
+  try {
+    const chatDocument = await firebaseFirestore
+      .collection("chat-room")
+      .doc(id)
+      .get();
+
+    const chatDetail: IChatRoomResponse | any = chatDocument.data();
+
+    return {
+      isSuccess: true,
+      data: chatDetail,
+    };
+  } catch (e) {
+    return {
+      isSuccess: false,
+      error: null,
+    };
   }
 };

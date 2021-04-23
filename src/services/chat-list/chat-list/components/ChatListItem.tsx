@@ -5,7 +5,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { PaperCard } from "../../../../components";
-import { IChatListResponse } from "../../../../third-party/firebase/services/chat/interface";
+import { IChatRoomResponse } from "../../../../third-party/firebase/services/chat/interface";
 import dayjs from "dayjs";
 const useStyles = makeStyles({
   paper: {
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 });
 
 interface IChatListItemProps {
-  lastMessage: IChatListResponse["lastMessage"];
+  lastMessage: IChatRoomResponse["lastMessage"];
   name: string;
   id: string;
   onClick: (id: string) => void;

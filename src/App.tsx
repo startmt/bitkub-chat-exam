@@ -20,6 +20,10 @@ const ChatListPage = lazy(
   () => import(/* webpackChunkName: "LoginPage" */ "./pages/chat-list")
 );
 
+const ChatRoomPage = lazy(
+  () => import(/* webpackChunkName: "LoginPage" */ "./pages/chat-room")
+);
+
 createFirebaseConnection();
 function App() {
   return (
@@ -29,6 +33,7 @@ function App() {
           <Suspense fallback={<Skeleton />}>
             <Switch>
               <PrivateRoute path="/main" component={ChatListPage} />
+              <PrivateRoute path="/chat-room/:id" component={ChatRoomPage} />
             </Switch>
             <Switch>
               <Route exact path="/login" component={LoginPage} />
