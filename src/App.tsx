@@ -1,5 +1,4 @@
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Skeleton } from "@material-ui/lab";
 import { ThemeProvider } from "@material-ui/styles";
@@ -38,7 +37,7 @@ function App() {
             <Switch>
               <UnAuthRoute exact path="/login" component={LoginPage} />
               <UnAuthRoute exact path="/register" component={RegisterPage} />
-              <PrivateRoute path="/main" component={ChatListPage} />
+              <PrivateRoute component={ChatListPage} />
             </Switch>
           </Suspense>
         </SnackbarProvider>
