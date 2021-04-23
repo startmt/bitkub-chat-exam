@@ -29,30 +29,15 @@ export const useMessageListContainer = () => {
 const useQueryChatListService = (id: string) => {
   const [messageList, setMessageList] = useState<any[]>([]);
 
+  const handleMessageList = (data: any[]) => {
+    setMessageList(data);
+  };
   const handleService = async () => {
-    const dataList = await firebaseServices.chatService.getChatMessageList(id);
-    if (dataList.isSuccess) {
-      const response = dataList as IResponseSuccessApi<any>;
-      response.data.query.onSnapshot(
-        async (
-          querySnapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
-        ) => {
-          const dataList = await Promise.all(
-            querySnapshot.docs.map(async (d) => {
-              const senderQuery = await d.data().sender.get();
-
-              const response = {
-                sender: senderQuery.data(),
-                sentTime: d.data().sentTime,
-                message: d.data().message,
-              };
-              return response;
-            })
-          );
-          setMessageList(dataList);
-        }
-      );
-    } else if (!dataList.isSuccess) {
+    const dataList = await firebaseServices.chatService.getChatMessageList(
+      id,
+      handleMessageList
+    );
+    if (!dataList.isSuccess) {
       const res = dataList as IResponseFailApi<any>;
       if (res.error.code === "notallow") {
         window.location.pathname = "/main";

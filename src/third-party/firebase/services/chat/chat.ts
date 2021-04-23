@@ -93,8 +93,9 @@ export const joinChatRoom: (
 };
 
 export const getChatMessageList: (
-  id: string
-) => Promise<IResponseApi<any>> = async (id) => {
+  id: string,
+  callback: (data: any[]) => void
+) => Promise<IResponseApi<any>> = async (id, callback) => {
   try {
     const user = firebaseAuth.currentUser;
 
@@ -117,7 +118,22 @@ export const getChatMessageList: (
             .doc(id)
             .collection("chat-message")
             .orderBy("sentTime")
-            .limit(100);
+            .limit(100)
+            .onSnapshot(async (querySnapshot) => {
+              const dataList = await Promise.all(
+                querySnapshot.docs.map(async (d) => {
+                  const senderQuery = await d.data().sender.get();
+
+                  const response = {
+                    sender: senderQuery.data(),
+                    sentTime: d.data().sentTime,
+                    message: d.data().message,
+                  };
+                  return response;
+                })
+              );
+              callback(dataList);
+            });
 
           return {
             data: { query: query },
