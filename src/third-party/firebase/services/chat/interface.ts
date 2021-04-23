@@ -16,3 +16,8 @@ export interface ICreateChatRoomResponse {
 export interface IJoinChatRoomResponse {
   id: string;
 }
+
+export interface ISendMessagePayload {
+  id: string;
+  message: string;
+}

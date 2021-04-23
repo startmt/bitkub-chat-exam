@@ -1,42 +1,51 @@
-import {
-  AppBar,
-  Container,
-  makeStyles,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
-import { useParams } from "react-router";
+import { Container, createStyles, makeStyles } from "@material-ui/core";
 import { PaperCard } from "../components";
 import { AppbarContainer } from "../services/chat/appbar";
-import { ChatRoomProvider, useChatRoomPage } from "../services/chat/contexts";
+import MessageListContainer from "../services/chat/message-list/MessageListContainer";
+import SendMesssageFormContainer from "../services/chat/send-message-form/SendMessageFormContainer";
 
-const useStyles = makeStyles({
-  container: {
-    height: "100vh",
-    padding: 50,
-  },
-  paper: {
-    borderRadius: 8,
-    height: "100%",
-    width: "100%",
-  },
-});
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    container: {
+      height: "100vh",
+      padding: 50,
+      [theme.breakpoints.down("md")]: {
+        padding: 0,
+      },
+    },
+    paper: {
+      borderRadius: 8,
+      height: "100%",
+      width: "100%",
+    },
+    messageListSection: {
+      width: "100%",
+      height: "calc(100% - 80px)",
+      overflow: "scroll",
+      [theme.breakpoints.down("md")]: {
+        height: "calc(100% - 96px)",
+      },
+    },
+    formSection: {
+      width: "100%",
+    },
+  })
+);
+
 const ChatRoomPage = () => {
-  const params: any = useParams();
-  return (
-    <ChatRoomProvider id={params.id}>
-      <RenderChatPage />
-    </ChatRoomProvider>
-  );
-};
-
-const RenderChatPage = () => {
   const classes = useStyles({});
-  const { messageList } = useChatRoomPage();
   return (
     <Container className={classes.container}>
       <PaperCard className={classes.paper}>
         <AppbarContainer />
+        <div className={classes.messageListSection}>
+          <PaperCard>
+            <MessageListContainer />
+          </PaperCard>
+        </div>
+        <div className={classes.formSection}>
+          <SendMesssageFormContainer />
+        </div>
       </PaperCard>
     </Container>
   );

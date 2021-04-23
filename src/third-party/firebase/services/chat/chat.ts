@@ -4,6 +4,7 @@ import {
   IChatRoomResponse,
   ICreateChatRoomResponse,
   IJoinChatRoomResponse,
+  ISendMessagePayload,
 } from "./interface";
 
 const { firebaseAuth, firebaseFirestore } = getFirebaseTool();
@@ -92,15 +93,15 @@ export const getChatMessageList: (
   id: string
 ) => Promise<IResponseApi<any>> = async (id) => {
   try {
-    const messageDocument = await firebaseFirestore
+    const query = firebaseFirestore
       .collection("chat-room")
       .doc(id)
       .collection("chat-message")
-      .limit(100)
-      .get();
-    const dataList = messageDocument.docs.map((d) => d.data());
+      .orderBy("sentTime")
+      .limit(100);
+
     return {
-      data: dataList,
+      data: { query: query },
       isSuccess: true,
     };
   } catch (e) {
@@ -130,6 +131,47 @@ export const getChatDetail: (
     return {
       isSuccess: false,
       error: null,
+    };
+  }
+};
+
+export const sendMessage: (
+  data: ISendMessagePayload
+) => Promise<IResponseApi<any>> = async (data) => {
+  try {
+    const user = firebaseAuth.currentUser;
+
+    const userDocument = await firebaseFirestore
+      .collection("users")
+      .where("email", "==", user?.email)
+      .get();
+
+    if (userDocument.size > 0) {
+      const payload = {
+        message: data.message,
+        sender: userDocument.docs[0].ref,
+        sentTime: new Date(),
+      };
+
+      await firebaseFirestore
+        .collection("chat-room")
+        .doc(data.id)
+        .collection("chat-message")
+        .add(payload);
+      return {
+        isSuccess: true,
+        data: null,
+      };
+    }
+    throw {
+      code: "unauthorized",
+      message: "You are not signin",
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      isSuccess: false,
+      error: e,
     };
   }
 };
