@@ -6,7 +6,7 @@ export interface IChatRoomResponse {
     message: string;
     time: firebase.firestore.Timestamp;
   };
-  // userId: string[];
+  usersId?: string[];
 }
 
 export interface ICreateChatRoomResponse {

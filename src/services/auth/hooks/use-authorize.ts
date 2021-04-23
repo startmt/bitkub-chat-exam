@@ -26,7 +26,6 @@ export const useAuthorize = () => {
 
   const [authorizeService, isAuthLoading] = useLoadingCallback(handleService);
 
-  console.log(authState);
   useEffect(() => {
     authorizeService();
   }, []);

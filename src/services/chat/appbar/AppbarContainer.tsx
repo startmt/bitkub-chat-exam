@@ -10,7 +10,7 @@ const Appbar = () => {
     <AppBar position="static">
       <Toolbar variant="dense">
         <Typography variant="h6" color="inherit">
-          {chatRoom && chatRoom.roomName}
+          {chatRoom && `${chatRoom.roomName} (${chatRoom.id})`}
         </Typography>
       </Toolbar>
     </AppBar>

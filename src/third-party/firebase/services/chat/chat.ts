@@ -1,4 +1,7 @@
-import { IResponseApi } from "../../../../domains/IResponse";
+import {
+  IResponseApi,
+  IResponseSuccessApi,
+} from "../../../../domains/IResponse";
 import { getFirebaseTool } from "../../firebase";
 import {
   IChatRoomResponse,
@@ -93,16 +96,39 @@ export const getChatMessageList: (
   id: string
 ) => Promise<IResponseApi<any>> = async (id) => {
   try {
-    const query = firebaseFirestore
-      .collection("chat-room")
-      .doc(id)
-      .collection("chat-message")
-      .orderBy("sentTime")
-      .limit(100);
+    const user = firebaseAuth.currentUser;
 
-    return {
-      data: { query: query },
-      isSuccess: true,
+    const userDocument = await firebaseFirestore
+      .collection("users")
+      .where("email", "==", user?.email)
+      .get();
+
+    if (userDocument.size > 0) {
+      const chatDetail = await getChatDetail(id);
+      if (chatDetail.isSuccess) {
+        const chatResponse = chatDetail as IResponseSuccessApi<IChatRoomResponse>;
+        if (
+          chatResponse.data?.usersId?.find(
+            (user) => user === userDocument.docs[0].id
+          )
+        ) {
+          const query = firebaseFirestore
+            .collection("chat-room")
+            .doc(id)
+            .collection("chat-message")
+            .orderBy("sentTime")
+            .limit(100);
+
+          return {
+            data: { query: query },
+            isSuccess: true,
+          };
+        }
+      }
+    }
+    throw {
+      code: "notallow",
+      message: "You can not enter this room, please join first",
     };
   } catch (e) {
     return {
@@ -121,7 +147,7 @@ export const getChatDetail: (
       .doc(id)
       .get();
 
-    const chatDetail: IChatRoomResponse | any = chatDocument.data();
+    const chatDetail: IChatRoomResponse | any = { ...chatDocument.data(), id };
 
     return {
       isSuccess: true,

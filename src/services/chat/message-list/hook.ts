@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useLoadingCallback } from "react-loading-hook";
 import { useParams } from "react-router";
-import { IResponseSuccessApi } from "../../../domains/IResponse";
+import {
+  IResponseFailApi,
+  IResponseSuccessApi,
+} from "../../../domains/IResponse";
 import { firebaseServices } from "../../../third-party/firebase";
 import { useIsVisible } from "react-is-visible";
 import firebase from "firebase";
@@ -49,6 +52,11 @@ const useQueryChatListService = (id: string) => {
           setMessageList(dataList);
         }
       );
+    } else if (!dataList.isSuccess) {
+      const res = dataList as IResponseFailApi<any>;
+      if (res.error.code === "notallow") {
+        window.location.pathname = "/main";
+      }
     }
   };
 
